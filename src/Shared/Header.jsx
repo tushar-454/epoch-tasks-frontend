@@ -7,6 +7,7 @@ import { SlUserFemale } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
 import NavItem from '../Components/NavItem';
 import logo from '../assets/icon/logo.webp';
+import userImage from '../assets/image/user.webp';
 import Container from './Container';
 
 const navItems = [
@@ -29,6 +30,7 @@ const navItems = [
 
 const Header = () => {
   const [navShow, setNavShow] = useState(false);
+  const user = false;
 
   return (
     <header className='flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
@@ -52,7 +54,7 @@ const Header = () => {
             </div>
           </div>
           <div
-            className={`w-full bg-white dark:bg-gray-800 absolute sm:relative overflow-hidden transition-all duration-300 basis-full grow sm:block origin-top scale-y-0 sm:scale-100 ${
+            className={`w-full bg-white dark:bg-gray-800 absolute sm:relative overflow-hidden transition-all duration-300 basis-full grow sm:block origin-top scale-y-0 sm:scale-100 px-4 pb-4 sm:px-0 sm:pb-0 ${
               navShow ? 'scale-y-100' : undefined
             }`}
           >
@@ -60,14 +62,23 @@ const Header = () => {
               {navItems.map((navIteminfo, index) => (
                 <NavItem key={index} navItem={navIteminfo} />
               ))}
-
-              <a
-                className='flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500'
-                href='#'
-              >
-                <SlUserFemale />
-                Log in
-              </a>
+              {user ? (
+                <Link
+                  className='flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500'
+                  to='/login'
+                >
+                  <img src={userImage} alt='user' className='w-12' />
+                  Jhon Dou
+                </Link>
+              ) : (
+                <Link
+                  className='flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:border-s sm:border-e sm:border-gray-300 sm:my-6 sm:ps-6 sm:pe-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500'
+                  to='/login'
+                >
+                  <SlUserFemale />
+                  Log in
+                </Link>
+              )}
             </div>
           </div>
         </nav>
