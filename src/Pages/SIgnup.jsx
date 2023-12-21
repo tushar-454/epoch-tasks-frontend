@@ -1,12 +1,159 @@
+/* eslint-disable no-useless-escape */
+import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ButtonFill from '../Components/UI/ButtonFill';
 import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
 import InputFile from '../Components/UI/InputFile';
+import useAuth from '../Hook/useAuth';
 import LoginwithGoogle from '../Shared/LoginwithGoogle';
-
+import PhotoUpload from '../Utils/PhotoUpload/PhotoUpload';
+import Toast from '../Utils/Toast/Toast';
+const signupInit = {
+  name: '',
+  email: '',
+  photoUrl: '',
+  password: '',
+  confirmPassword: '',
+  terms: false,
+};
+const errorInit = {
+  name: '',
+  email: '',
+  photoUrl: '',
+  password: '',
+  confirmPassword: '',
+  terms: false,
+};
 const Signup = () => {
+  const [signup, setSignup] = useState({ ...signupInit });
+  const [error, setError] = useState({ ...errorInit });
+  const { signupWithEmailPassword, updateUserProfile } = useAuth();
+  const navigate = useNavigate();
+  const [photoStatus, setPhotoStatus] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // handle input change
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setSignup((prevObj) => ({
+      ...prevObj,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+    setError((prevError) => ({
+      ...prevError,
+      [name]: type === 'checkbox' ? false : '',
+    }));
+  };
+  // handle photo upload change
+  const photoUpload = (e) => {
+    const imageName = e.target.files[0].name.slice(0, -4);
+    signup.photoUrl = imageName;
+    error.photoUrl = '';
+    setPhotoStatus(imageName);
+  };
+
+  // handle form submit create user using email password
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { name, email, photoUrl, password, confirmPassword } = signup;
+    {
+      // name error check
+      if (!name) {
+        return setError((errorObj) => ({
+          ...errorObj,
+          name: 'Name is Require!',
+        }));
+      } else if (name.length < 3) {
+        return setError((errorObj) => ({
+          ...errorObj,
+          name: 'Name Must be 3 Charecters!',
+        }));
+      }
+      // email error check
+      if (!email) {
+        return setError((errorObj) => ({
+          ...errorObj,
+          email: 'Email is Require!',
+        }));
+      } else if (
+        !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/.test(
+          email
+        )
+      ) {
+        return setError((errorObj) => ({
+          ...errorObj,
+          email: 'Enter your valid email!',
+        }));
+      }
+      // photo check
+      if (!photoUrl) {
+        return setError((errorObj) => ({
+          ...errorObj,
+          photoUrl: 'Photo Url is Require!',
+        }));
+      }
+      // password check
+      if (!password) {
+        return setError((prevError) => ({
+          ...prevError,
+          password: 'Password is required !',
+        }));
+      } else if (!/[A-Z]/.test(password)) {
+        return setError((prevError) => ({
+          ...prevError,
+          password: 'must have a capital letter',
+        }));
+      } else if (!/[a-z]/.test(password)) {
+        return setError((prevError) => ({
+          ...prevError,
+          password: 'must have a small letter',
+        }));
+      } else if (!/[^a-zA-Z0-9\s]/.test(password)) {
+        return setError((prevError) => ({
+          ...prevError,
+          password: 'must have a special Cherecter',
+        }));
+      } else if (!/\d+/.test(password)) {
+        return setError((prevError) => ({
+          ...prevError,
+          password: 'must have a number',
+        }));
+      } else if (password.length < 6) {
+        return setError((prevError) => ({
+          ...prevError,
+          password: 'password must 6 charecters',
+        }));
+      }
+      // check confirm password
+      if (password !== confirmPassword) {
+        setError((prevError) => ({
+          ...prevError,
+          confirmPassword: 'Password not matched !',
+        }));
+        return;
+      }
+    }
+    try {
+      setIsLoading(true);
+      //upload image
+      const imageData = await PhotoUpload(e.target.photoUrl.files[0]);
+
+      const res = await signupWithEmailPassword(email, password);
+      if (res.user) {
+        await updateUserProfile(name, imageData);
+        Toast('Account create successfully.', 'success');
+        navigate('/');
+      }
+    } catch (error) {
+      Toast('There was an error !', 'error');
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <section className='min-h-screen bg-white dark:bg-gray-900'>
       <main className='w-full max-w-md mx-auto p-6 '>
@@ -40,7 +187,7 @@ const Signup = () => {
               </div>
 
               {/* <!-- Form --> */}
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className='grid gap-y-4'>
                   <Input
                     displayName='Full Name'
@@ -48,6 +195,9 @@ const Signup = () => {
                     id={'name'}
                     name='name'
                     placeholder={'Jhon Dou'}
+                    value={signup.name}
+                    error={error.name}
+                    onChange={handleInputChange}
                   />
                   <Input
                     displayName='Email address'
@@ -55,12 +205,19 @@ const Signup = () => {
                     id={'email'}
                     name='email'
                     placeholder={'example@gmail.com'}
+                    value={signup.email}
+                    error={error.email}
+                    onChange={handleInputChange}
                   />
                   <InputFile
-                    displayName='Upload your photo'
+                    displayName={
+                      photoStatus ? photoStatus : 'Upload your photo'
+                    }
                     type='file'
-                    id={'photoUpload'}
-                    name='photoUpload'
+                    id={'photoUrl'}
+                    name='photoUrl'
+                    error={error.photoUrl}
+                    onChange={photoUpload}
                   />
                   <Input
                     displayName='Password'
@@ -68,6 +225,9 @@ const Signup = () => {
                     id={'password'}
                     name='password'
                     placeholder={'s909j*(^&'}
+                    value={signup.password}
+                    error={error.password}
+                    onChange={handleInputChange}
                   />
                   <Input
                     displayName='Confirm Password'
@@ -75,14 +235,21 @@ const Signup = () => {
                     id={'confirmPassword'}
                     name='confirmPassword'
                     placeholder={'s909j*(^&'}
+                    value={signup.confirmPassword}
+                    error={error.confirmPassword}
+                    onChange={handleInputChange}
                   />
                   <Checkbox
-                    displayName={'Remember Me'}
-                    id='remember-me'
+                    displayName={'I agree all terms & condition'}
+                    id='terms'
                     type='checkbox'
-                    name='remember-me'
+                    name='terms'
+                    value={signup.terms}
+                    onChange={handleInputChange}
                   />
-                  <ButtonFill displayName={'Sign Up'} />
+                  <ButtonFill
+                    displayName={isLoading ? 'Creating...' : 'Sign Up'}
+                  />
                 </div>
               </form>
               {/* <!-- End Form --> */}

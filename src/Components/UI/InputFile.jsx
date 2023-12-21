@@ -24,7 +24,7 @@ const InputFile = ({ displayName = 'displayName', id, error, ...rest }) => {
         )}
       </div>
       {error && (
-        <p className='hidden text-xs text-red-600 mt-2' id='password-error'>
+        <p className='text-xs text-red-600 mt-2' id='password-error'>
           {error}
         </p>
       )}

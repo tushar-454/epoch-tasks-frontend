@@ -1,11 +1,56 @@
+import { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ButtonFill from '../Components/UI/ButtonFill';
 import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
+import useAuth from '../Hook/useAuth';
 import LoginwithGoogle from '../Shared/LoginwithGoogle';
+import Toast from '../Utils/Toast/Toast';
+
+const loginInit = {
+  email: '',
+  password: '',
+};
+const errorInit = {
+  email: '',
+  password: '',
+};
 
 const Login = () => {
+  const [login, setLogin] = useState({ ...loginInit });
+  const [error, setError] = useState({ ...errorInit });
+  const [loading, setLoading] = useState(false);
+  const { loginWithEmailPass } = useAuth();
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  // handle input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLogin((prevObj) => ({ ...prevObj, [name]: value }));
+    setError((prevObj) => ({ ...prevObj, [name]: '' }));
+  };
+  // handle login
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const { email, password } = login;
+    if (!email || !password) {
+      return Toast('All field must required!', 'info');
+    }
+    try {
+      setLoading(true);
+      const res = await loginWithEmailPass(email, password);
+      const user = res.user;
+      if (user) {
+        navigate(state || '/');
+        Toast('Login successfull !', 'success');
+      }
+    } catch (error) {
+      Toast('There was an error !', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <section className='min-h-screen bg-white dark:bg-gray-900'>
       <main className='w-full max-w-md mx-auto p-6 '>
@@ -40,7 +85,7 @@ const Login = () => {
               </div>
 
               {/* <!-- Form --> */}
-              <form>
+              <form onSubmit={handleLogin}>
                 <div className='grid gap-y-4'>
                   <Input
                     displayName='Email address'
@@ -48,6 +93,9 @@ const Login = () => {
                     id={'email'}
                     name='email'
                     placeholder={'example@gmail.com'}
+                    value={login.email}
+                    error={error.email}
+                    onChange={handleInputChange}
                   />
                   <Input
                     displayName='Password'
@@ -55,6 +103,9 @@ const Login = () => {
                     id={'password'}
                     name='password'
                     placeholder={'s909j*(^&'}
+                    value={login.password}
+                    error={error.password}
+                    onChange={handleInputChange}
                   />
                   <Checkbox
                     displayName={'Remember Me'}
@@ -62,7 +113,9 @@ const Login = () => {
                     type='checkbox'
                     name='remember-me'
                   />
-                  <ButtonFill displayName={'Sign In'} />
+                  <ButtonFill
+                    displayName={loading ? 'Sign In ...' : 'Sign In'}
+                  />
                 </div>
               </form>
               {/* <!-- End Form --> */}
