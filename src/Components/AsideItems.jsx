@@ -7,22 +7,22 @@ import DashboardNavItem from './DashboardNavItem';
 const dashboardNavItems = [
   {
     route: 'All Task',
-    path: '/all-task',
+    path: 'all-task',
     icon: <BsListTask />,
   },
   {
     route: 'Add a Task',
-    path: '/add-task',
+    path: 'add-task',
     icon: <MdAddTask />,
   },
   {
     route: 'Completed Task',
-    path: '/completed-task',
+    path: 'completed-task',
     icon: <GrTask />,
   },
   {
     route: 'Trash',
-    path: '/trash',
+    path: 'trash',
     icon: <FaRegTrashAlt />,
   },
 ];
@@ -39,7 +39,11 @@ const AsideItems = ({ isCollapse, setIsCollapse }) => {
       </span>
       <div className='min-h-screen border-r flex flex-col'>
         {dashboardNavItems.map((navItem, index) => (
-          <DashboardNavItem key={index} navItem={navItem} />
+          <DashboardNavItem
+            key={index}
+            navItem={navItem}
+            setIsCollapse={setIsCollapse}
+          />
         ))}
       </div>
     </aside>

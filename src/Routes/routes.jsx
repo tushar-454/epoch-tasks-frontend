@@ -1,10 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Dashboard from '../Layout/Dashboard';
 import Root from '../Layout/Root';
+import AddTask from '../Pages/AddTask';
+import AllTask from '../Pages/AllTask';
+import CompletedTask from '../Pages/CompletedTask';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
 import Profile from '../Pages/Profile';
 import Signup from '../Pages/SIgnup';
+import Trash from '../Pages/Trash';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -32,6 +36,28 @@ const routes = createBrowserRouter([
             <Dashboard />
           </PrivateRoute>
         ),
+        children: [
+          {
+            index: true,
+            element: <AllTask />,
+          },
+          {
+            path: 'all-task',
+            element: <AllTask />,
+          },
+          {
+            path: 'add-task',
+            element: <AddTask />,
+          },
+          {
+            path: 'completed-task',
+            element: <CompletedTask />,
+          },
+          {
+            path: 'trash',
+            element: <Trash />,
+          },
+        ],
       },
     ],
   },
