@@ -7,9 +7,9 @@ import Toast from '../Utils/Toast/Toast';
 const Profile = () => {
   const { user } = useAuth();
   return (
-    <section>
+    <section className='bg-white dark:bg-gray-700'>
       <Container>
-        <div className='flex flex-col gap-1 items-center my-10 min-h-screen'>
+        <div className='flex flex-col gap-1 items-center py-10 min-h-screen'>
           <div>
             <img
               src={user?.photoURL}
@@ -17,7 +17,7 @@ const Profile = () => {
               className='w-32 h-32 object-cover border-2 border-transparent ring-4 ring-froly-600 rounded-full mb-5'
             />
           </div>
-          <h1 className='text-3xl font-bold relative'>
+          <h1 className='text-3xl font-bold relative dark:text-slate-50'>
             {user?.displayName}{' '}
             {user?.emailVerified && (
               <>
@@ -33,8 +33,12 @@ const Profile = () => {
               </>
             )}
           </h1>
-          <p className='text-xl font-semibold'>{user?.email}</p>
-          <p className='text-lg font-semibold'>{user?.uid}</p>
+          <p className='text-xl font-semibold dark:text-slate-100'>
+            {user?.email}
+          </p>
+          <p className='text-lg font-semibold dark:text-slate-200'>
+            {user?.uid}
+          </p>
           <div className='flex flex-col sm:flex-row justify-center items-center gap-5 mt-5'>
             <ButtonFill
               displayName={'Change my Photo'}
