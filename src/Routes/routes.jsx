@@ -3,6 +3,7 @@ import Dashboard from '../Layout/Dashboard';
 import Root from '../Layout/Root';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
+import Profile from '../Pages/Profile';
 import Signup from '../Pages/SIgnup';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
@@ -15,6 +16,14 @@ const routes = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: 'profile',
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'dashboard',

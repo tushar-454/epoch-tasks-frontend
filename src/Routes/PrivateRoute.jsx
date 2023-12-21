@@ -1,8 +1,34 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import useAuth from '../Hook/useAuth';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
+  const { pathname } = useLocation();
+  if (loading && pathname === '/profile') {
+    return (
+      <>
+        <div className='flex flex-col gap-1 items-center my-10 min-h-screen'>
+          <div>
+            <p className='w-32 h-32 object-cover border-2 border-transparent ring-4 ring-gray-300 rounded-full mb-5'></p>
+          </div>
+          <p className='w-[200px] h-10 bg-gray-300 rounded-full'></p>
+          <p className='w-[260px] h-5 bg-gray-300 rounded-full'></p>
+          <p className='w-[290px] h-5 bg-gray-300 rounded-full'></p>
+          <div className='flex flex-col sm:flex-row justify-center items-center gap-5 mt-5'>
+            <div>
+              <button className='w-[169px] h-[46px] py-3 px-4 border-transparent rounded-lg bg-gray-300 dark:bg-gray-700'></button>
+            </div>
+            <div>
+              <button className='w-[169px] h-[46px] py-3 px-4 border-transparent rounded-lg bg-gray-300 dark:bg-gray-700'></button>
+            </div>
+            <div>
+              <button className='w-[169px] h-[46px] py-3 px-4 border-transparent rounded-lg bg-gray-300 dark:bg-gray-700'></button>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
   if (loading) {
     return (
       <>
