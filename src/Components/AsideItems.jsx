@@ -28,7 +28,7 @@ const dashboardNavItems = [
 ];
 const AsideItems = ({ isCollapse, setIsCollapse }) => {
   return (
-    <aside className='relative bg-slate-50 dark:bg-slate-800'>
+    <aside className='z-30 relative bg-slate-50 dark:bg-slate-800'>
       <span
         onClick={() => setIsCollapse(!isCollapse)}
         className={`block lg:hidden absolute -top-1 -right-8 cursor-pointer ${
