@@ -14,7 +14,7 @@ const Dashboard = () => {
         >
           <AsideItems isCollapse={isCollapse} setIsCollapse={setIsCollapse} />
         </div>
-        <div className='flex-grow p-8 bg-white dark:bg-slate-700'>
+        <div className='flex-grow p-8 bg-white min-h-screen dark:bg-slate-700'>
           <Outlet />
         </div>
       </div>

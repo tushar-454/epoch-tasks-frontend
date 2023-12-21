@@ -1,7 +1,9 @@
+import DashBoardNavItemTitle from '../Shared/DashBoardNavItemTitle';
+
 const AllTask = () => {
   return (
-    <div>
-      <h1>This is my all task</h1>
+    <div className='w-full mx-auto'>
+      <DashBoardNavItemTitle displayName='All Task' />
     </div>
   );
 };
