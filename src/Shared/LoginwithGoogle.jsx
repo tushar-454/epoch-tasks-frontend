@@ -1,13 +1,18 @@
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../Hook/useAuth';
 import Toast from '../Utils/Toast/Toast';
 
 const LoginwithGoogle = () => {
   const { loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
   const handleLoginWithGoogle = async () => {
     try {
       const res = await loginWithGoogle();
       const user = res.user;
       if (user) {
+        navigate(state || '/');
         Toast('Login Successfull', 'success');
       }
     } catch (error) {
