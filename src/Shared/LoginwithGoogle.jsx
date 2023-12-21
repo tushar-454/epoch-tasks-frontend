@@ -1,4 +1,5 @@
 import useAuth from '../Hook/useAuth';
+import Toast from '../Utils/Toast/Toast';
 
 const LoginwithGoogle = () => {
   const { loginWithGoogle } = useAuth();
@@ -7,10 +8,10 @@ const LoginwithGoogle = () => {
       const res = await loginWithGoogle();
       const user = res.user;
       if (user) {
-        console.log('google login successfull');
+        Toast('Login Successfull', 'success');
       }
     } catch (error) {
-      console.log(error.message);
+      Toast('There was an error !', 'error');
     }
   };
   return (

@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { createContext, useEffect, useState } from 'react';
 import { Auth } from '../Config/firebase-config';
+import Toast from '../Utils/Toast/Toast';
 
 export const AuthContext = createContext(null);
 
@@ -41,7 +42,9 @@ const AuthProvider = ({ children }) => {
   //logout account
   const logOutAccount = () => {
     setLoading(false);
-    signOut(Auth).then(() => {});
+    signOut(Auth).then(() => {
+      Toast('Logout Successfull', 'success');
+    });
   };
 
   useEffect(() => {
