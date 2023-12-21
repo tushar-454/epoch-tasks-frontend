@@ -66,7 +66,11 @@ const Header = () => {
           >
             <div className='flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0'>
               {navItems.map((navIteminfo, index) => (
-                <NavItem key={index} navItem={navIteminfo} />
+                <NavItem
+                  key={index}
+                  navItem={navIteminfo}
+                  setNavShow={setNavShow}
+                />
               ))}
               {user ? (
                 <>
@@ -91,7 +95,10 @@ const Header = () => {
                     <ul className='py-2' aria-labelledby='user-menu-button'>
                       <li className='cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'>
                         <Link
-                          onClick={() => setDropdown(false)}
+                          onClick={() => {
+                            setNavShow(false);
+                            setDropdown(false);
+                          }}
                           to={'profile'}
                           className='flex gap-2 items-center'
                         >
@@ -102,6 +109,7 @@ const Header = () => {
                         onClick={() => {
                           setDarkMode(!darkMode);
                           setDropdown(!dropdown);
+                          setNavShow(false);
                         }}
                         className='flex gap-2 items-center cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
                       >
@@ -119,6 +127,7 @@ const Header = () => {
                         onClick={() => {
                           logOutAccount();
                           setDropdown(false);
+                          setNavShow(false);
                         }}
                         className='flex gap-2 items-center cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
                       >
