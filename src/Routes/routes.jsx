@@ -4,6 +4,8 @@ import Root from '../Layout/Root';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
 import Signup from '../Pages/SIgnup';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 const routes = createBrowserRouter([
   {
@@ -16,17 +18,29 @@ const routes = createBrowserRouter([
       },
       {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
   {
     path: '/signup',
-    element: <Signup />,
+    element: (
+      <PublicRoute>
+        <Signup />
+      </PublicRoute>
+    ),
   },
 ]);
 
