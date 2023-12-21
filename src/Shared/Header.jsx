@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { CgProfile } from 'react-icons/cg';
+import { CiDark } from 'react-icons/ci';
 import { IoHomeOutline, IoMenuOutline } from 'react-icons/io5';
-import { MdOutlineDashboard } from 'react-icons/md';
+import { MdDarkMode, MdOutlineDashboard } from 'react-icons/md';
+import { PiSignOutBold } from 'react-icons/pi';
 import { RxCross2 } from 'react-icons/rx';
 import { SiKnowledgebase } from 'react-icons/si';
 import { SlUserFemale } from 'react-icons/sl';
@@ -31,7 +34,9 @@ const navItems = [
 
 const Header = () => {
   const [navShow, setNavShow] = useState(false);
-  const { user } = useAuth();
+  const [dropdown, setDropdown] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const { user, logOutAccount } = useAuth();
 
   return (
     <header className='flex flex-wrap sm:justify-start sm:flex-nowrap topPriority w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
@@ -55,7 +60,7 @@ const Header = () => {
             </div>
           </div>
           <div
-            className={`w-full !bg-white dark:!bg-gray-800 absolute z-50 sm:relative overflow-hidden transition-all duration-300 basis-full grow sm:block origin-top scale-y-0 sm:scale-100 px-4 pb-4 sm:px-0 sm:pb-0 ${
+            className={`w-full !bg-white dark:!bg-gray-800 absolute z-50 sm:relative transition-all duration-300 basis-full grow sm:block origin-top scale-y-0 sm:scale-100 px-4 pb-4 sm:px-0 sm:pb-0 ${
               navShow ? 'scale-y-100' : undefined
             }`}
           >
@@ -64,17 +69,63 @@ const Header = () => {
                 <NavItem key={index} navItem={navIteminfo} />
               ))}
               {user ? (
-                <Link
-                  className='flex items-center gap-x-2 font-medium text-gray-500 transition-all hover:text-froly-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-froly-600'
-                  to='/profile'
-                >
-                  <img
-                    src={user?.photoURL || userImage}
-                    alt='user'
-                    className='w-12 rounded-full'
-                  />
-                  {user?.displayName || 'Jhon Dou'}
-                </Link>
+                <>
+                  {' '}
+                  <p
+                    onClick={() => setDropdown(!dropdown)}
+                    className='flex items-center gap-x-2 font-medium text-gray-500 transition-all cursor-pointer hover:text-froly-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-froly-600'
+                  >
+                    <img
+                      src={user?.photoURL || userImage}
+                      alt='user'
+                      className='w-12 rounded-full'
+                    />
+                    {user?.displayName || 'Jhon Dou'}
+                  </p>
+                  {/* <!-- Dropdown menu --> */}
+                  <div
+                    className={`z-50 absolute top-12 right-0 transition origin-top-right ${
+                      dropdown ? 'scale-100' : 'scale-0'
+                    } my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
+                  >
+                    <ul className='py-2' aria-labelledby='user-menu-button'>
+                      <li className='cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'>
+                        <Link
+                          to={'profile'}
+                          className='flex gap-2 items-center'
+                        >
+                          Profile <CgProfile />
+                        </Link>
+                      </li>
+                      <li
+                        onClick={() => {
+                          setDarkMode(!darkMode);
+                          setDropdown(!dropdown);
+                        }}
+                        className='flex gap-2 items-center cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                      >
+                        {darkMode ? (
+                          <span className='flex gap-2 items-center'>
+                            Lightmode <CiDark />
+                          </span>
+                        ) : (
+                          <span className='flex gap-2 items-center'>
+                            Darkmode <MdDarkMode />
+                          </span>
+                        )}
+                      </li>
+                      <li
+                        onClick={() => {
+                          logOutAccount();
+                          setDropdown(false);
+                        }}
+                        className='flex gap-2 items-center cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
+                      >
+                        Sign out <PiSignOutBold />
+                      </li>
+                    </ul>
+                  </div>
+                </>
               ) : (
                 <Link
                   className='flex items-center gap-x-2 font-medium text-gray-500 transition-all hover:text-froly-600 sm:border-s sm:border-e sm:border-gray-300 sm:my-6 sm:ps-6 sm:pe-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-froly-600'
