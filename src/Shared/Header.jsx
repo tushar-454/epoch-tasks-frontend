@@ -64,7 +64,7 @@ const Header = () => {
               ))}
               {user ? (
                 <Link
-                  className='flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500'
+                  className='flex items-center gap-x-2 font-medium text-gray-500 transition-all hover:text-froly-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-froly-600'
                   to='/login'
                 >
                   <img src={userImage} alt='user' className='w-12' />
@@ -72,7 +72,7 @@ const Header = () => {
                 </Link>
               ) : (
                 <Link
-                  className='flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:border-s sm:border-e sm:border-gray-300 sm:my-6 sm:ps-6 sm:pe-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-blue-500'
+                  className='flex items-center gap-x-2 font-medium text-gray-500 transition-all hover:text-froly-600 sm:border-s sm:border-e sm:border-gray-300 sm:my-6 sm:ps-6 sm:pe-6 dark:border-gray-700 dark:text-gray-400 dark:hover:text-froly-600'
                   to='/login'
                 >
                   <SlUserFemale />
