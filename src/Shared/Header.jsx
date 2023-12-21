@@ -33,7 +33,7 @@ const Header = () => {
   const user = false;
 
   return (
-    <header className='flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
+    <header className='flex flex-wrap sm:justify-start sm:flex-nowrap topPriority w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
       <Container>
         <nav
           className='relative max-w-7xl w-full mx-auto sm:flex sm:items-center sm:justify-between '
@@ -54,7 +54,7 @@ const Header = () => {
             </div>
           </div>
           <div
-            className={`w-full bg-white dark:bg-gray-800 absolute sm:relative overflow-hidden transition-all duration-300 basis-full grow sm:block origin-top scale-y-0 sm:scale-100 px-4 pb-4 sm:px-0 sm:pb-0 ${
+            className={`w-full !bg-white dark:!bg-gray-800 absolute z-50 sm:relative overflow-hidden transition-all duration-300 basis-full grow sm:block origin-top scale-y-0 sm:scale-100 px-4 pb-4 sm:px-0 sm:pb-0 ${
               navShow ? 'scale-y-100' : undefined
             }`}
           >

@@ -11,3 +11,9 @@ body {
 .active {
   @apply !text-froly-600;
 }
+.activeDashboardItem {
+  @apply !text-froly-600 !bg-froly-50 dark:hover:bg-slate-700;
+}
+.topPriority {
+  z-index: 999999 !important;
+}
