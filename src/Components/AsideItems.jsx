@@ -1,28 +1,29 @@
-import { IoHomeOutline } from 'react-icons/io5';
-import { MdOutlineDashboard } from 'react-icons/md';
+import { BsListTask } from 'react-icons/bs';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import { GrTask } from 'react-icons/gr';
+import { MdAddTask } from 'react-icons/md';
 import { PiCaretRightFill } from 'react-icons/pi';
-import { SiKnowledgebase } from 'react-icons/si';
 import DashboardNavItem from './DashboardNavItem';
 const dashboardNavItems = [
   {
     route: 'All Task',
     path: '/all-task',
-    icon: <IoHomeOutline />,
+    icon: <BsListTask />,
   },
   {
     route: 'Add a Task',
     path: '/add-task',
-    icon: <SiKnowledgebase />,
+    icon: <MdAddTask />,
   },
   {
     route: 'Completed Task',
     path: '/completed-task',
-    icon: <MdOutlineDashboard />,
+    icon: <GrTask />,
   },
   {
     route: 'Trash',
     path: '/trash',
-    icon: <IoHomeOutline />,
+    icon: <FaRegTrashAlt />,
   },
 ];
 const AsideItems = ({ isCollapse, setIsCollapse }) => {
