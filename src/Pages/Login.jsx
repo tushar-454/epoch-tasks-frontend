@@ -5,6 +5,7 @@ import ButtonFill from '../Components/UI/ButtonFill';
 import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
 import useAuth from '../Hook/useAuth';
+import useAxios from '../Hook/useAxios';
 import LoginwithGoogle from '../Shared/LoginwithGoogle';
 import Toast from '../Utils/Toast/Toast';
 
@@ -22,6 +23,7 @@ const Login = () => {
   const [error, setError] = useState({ ...errorInit });
   const [loading, setLoading] = useState(false);
   const { loginWithEmailPass } = useAuth();
+  const axios = useAxios();
   const navigate = useNavigate();
   const { state } = useLocation();
   // handle input change
@@ -42,6 +44,7 @@ const Login = () => {
       const res = await loginWithEmailPass(email, password);
       const user = res.user;
       if (user) {
+        axios.post('/jwt/create', { email: user?.email });
         navigate(state || '/');
         Toast('Login successfull !', 'success');
       }

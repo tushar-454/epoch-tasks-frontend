@@ -1,17 +1,20 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../Hook/useAuth';
+import useAxios from '../Hook/useAxios';
 import Toast from '../Utils/Toast/Toast';
 
 const LoginwithGoogle = () => {
   const { loginWithGoogle } = useAuth();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const axios = useAxios();
 
   const handleLoginWithGoogle = async () => {
     try {
       const res = await loginWithGoogle();
       const user = res.user;
       if (user) {
+        axios.post('/jwt/create', { email: user?.email });
         navigate(state || '/');
         Toast('Login Successfull', 'success');
       }

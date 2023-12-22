@@ -7,6 +7,7 @@ import Checkbox from '../Components/UI/Checkbox';
 import Input from '../Components/UI/Input';
 import InputFile from '../Components/UI/InputFile';
 import useAuth from '../Hook/useAuth';
+import useAxios from '../Hook/useAxios';
 import LoginwithGoogle from '../Shared/LoginwithGoogle';
 import PhotoUpload from '../Utils/PhotoUpload/PhotoUpload';
 import Toast from '../Utils/Toast/Toast';
@@ -33,6 +34,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const [photoStatus, setPhotoStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const axios = useAxios();
 
   // handle input change
   const handleInputChange = (e) => {
@@ -148,6 +150,7 @@ const Signup = () => {
       const res = await signupWithEmailPassword(email, password);
       if (res.user) {
         await updateUserProfile(name, imageData);
+        axios.post('/jwt/create', { email: res.user?.email });
         setForceUP({ name: name, photo: imageData });
         Toast('Account create successfully.', 'success');
         navigate('/');

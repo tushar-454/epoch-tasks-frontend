@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { createContext, useEffect, useState } from 'react';
 import { Auth } from '../Config/firebase-config';
+import useAxios from '../Hook/useAxios';
 import Toast from '../Utils/Toast/Toast';
 
 export const AuthContext = createContext(null);
@@ -17,6 +18,8 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [forceUP, setForceUP] = useState({ name: null, photo: null });
+  const axios = useAxios();
+
   // login with google
   const loginWithGoogle = () => {
     return signInWithPopup(Auth, new GoogleAuthProvider());
@@ -44,6 +47,7 @@ const AuthProvider = ({ children }) => {
   const logOutAccount = () => {
     setLoading(false);
     signOut(Auth).then(() => {
+      axios.post('/jwt/remove', {});
       Toast('Logout Successfull', 'success');
     });
   };
