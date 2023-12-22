@@ -11,7 +11,6 @@ import { Link } from 'react-router-dom';
 import NavItem from '../Components/NavItem';
 import useAuth from '../Hook/useAuth';
 import logo from '../assets/icon/logo.webp';
-import userImage from '../assets/image/user.webp';
 import Container from './Container';
 
 const navItems = [
@@ -36,7 +35,7 @@ const Header = () => {
   const [navShow, setNavShow] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [darkMode, setDarkMode] = useState(localStorage.getItem('theme'));
-  const { user, logOutAccount } = useAuth();
+  const { user, logOutAccount, forceUP } = useAuth();
   useEffect(() => {
     if (
       darkMode === null &&
@@ -102,11 +101,11 @@ const Header = () => {
                     className='flex items-center gap-x-2 font-medium text-gray-500 transition-all cursor-pointer hover:text-froly-600 dark:border-gray-700 dark:text-gray-400 dark:hover:text-froly-600'
                   >
                     <img
-                      src={user?.photoURL || userImage}
+                      src={user?.photoURL || forceUP.photo}
                       alt='user'
-                      className='w-12 rounded-full'
+                      className='w-12 h-12 object-cover rounded-full'
                     />
-                    {user?.displayName || 'Jhon Dou'}
+                    {user?.displayName || forceUP.name}
                   </p>
                   {/* <!-- Dropdown menu --> */}
                   <div

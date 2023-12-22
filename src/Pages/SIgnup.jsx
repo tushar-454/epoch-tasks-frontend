@@ -29,7 +29,7 @@ const errorInit = {
 const Signup = () => {
   const [signup, setSignup] = useState({ ...signupInit });
   const [error, setError] = useState({ ...errorInit });
-  const { signupWithEmailPassword, updateUserProfile } = useAuth();
+  const { signupWithEmailPassword, updateUserProfile, setForceUP } = useAuth();
   const navigate = useNavigate();
   const [photoStatus, setPhotoStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,7 @@ const Signup = () => {
   // handle form submit create user using email password
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, photoUrl, password, confirmPassword } = signup;
+    const { name, email, photoUrl, password, confirmPassword, terms } = signup;
     {
       // name error check
       if (!name) {
@@ -134,6 +134,11 @@ const Signup = () => {
         }));
         return;
       }
+      // check terms
+      if (!terms) {
+        Toast('Checked terms and condition', 'warning');
+        return;
+      }
     }
     try {
       setIsLoading(true);
@@ -143,6 +148,7 @@ const Signup = () => {
       const res = await signupWithEmailPassword(email, password);
       if (res.user) {
         await updateUserProfile(name, imageData);
+        setForceUP({ name: name, photo: imageData });
         Toast('Account create successfully.', 'success');
         navigate('/');
       }

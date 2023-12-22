@@ -16,6 +16,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [forceUP, setForceUP] = useState({ name: null, photo: null });
   // login with google
   const loginWithGoogle = () => {
     return signInWithPopup(Auth, new GoogleAuthProvider());
@@ -70,6 +71,8 @@ const AuthProvider = ({ children }) => {
     loginWithEmailPass,
     logOutAccount,
     updateUserProfile,
+    forceUP,
+    setForceUP,
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
