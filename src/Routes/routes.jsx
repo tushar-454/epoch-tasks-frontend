@@ -6,6 +6,7 @@ import AllTask from '../Pages/AllTask';
 import CompletedTask from '../Pages/CompletedTask';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
+import ManageTask from '../Pages/ManageTask';
 import Profile from '../Pages/Profile';
 import Signup from '../Pages/SIgnup';
 import Trash from '../Pages/Trash';
@@ -50,6 +51,10 @@ const routes = createBrowserRouter([
           {
             path: 'add-task',
             element: <AddTask />,
+          },
+          {
+            path: 'manage-task',
+            element: <ManageTask />,
           },
           {
             path: 'completed-task',

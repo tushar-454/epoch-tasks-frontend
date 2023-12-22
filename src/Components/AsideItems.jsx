@@ -1,7 +1,7 @@
 import { BsListTask } from 'react-icons/bs';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { GrTask } from 'react-icons/gr';
-import { MdAddTask } from 'react-icons/md';
+import { MdAddTask, MdManageHistory } from 'react-icons/md';
 import { PiCaretRightFill } from 'react-icons/pi';
 import DashboardNavItem from './DashboardNavItem';
 const dashboardNavItems = [
@@ -14,6 +14,11 @@ const dashboardNavItems = [
     route: 'Add a Task',
     path: 'add-task',
     icon: <MdAddTask />,
+  },
+  {
+    route: 'Manage Task',
+    path: 'manage-task',
+    icon: <MdManageHistory />,
   },
   {
     route: 'Completed Task',
