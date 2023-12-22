@@ -150,7 +150,11 @@ const Signup = () => {
       const res = await signupWithEmailPassword(email, password);
       if (res.user) {
         await updateUserProfile(name, imageData);
-        axios.post('/jwt/create', { email: res.user?.email });
+        axios.post('/jwt/create', { email: res?.user?.email });
+        axios.post('/user/create', {
+          name: res?.user?.displayName,
+          email: res?.user?.email,
+        });
         setForceUP({ name: name, photo: imageData });
         Toast('Account create successfully.', 'success');
         navigate('/');

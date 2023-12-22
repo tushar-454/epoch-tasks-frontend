@@ -15,6 +15,10 @@ const LoginwithGoogle = () => {
       const user = res.user;
       if (user) {
         axios.post('/jwt/create', { email: user?.email });
+        axios.post('/user/create', {
+          name: user?.displayName,
+          email: user?.email,
+        });
         navigate(state || '/');
         Toast('Login Successfull', 'success');
       }
