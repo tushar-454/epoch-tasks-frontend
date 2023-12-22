@@ -39,7 +39,7 @@ const Header = () => {
   const { user, logOutAccount } = useAuth();
 
   return (
-    <header className='flex flex-wrap sm:justify-start sm:flex-nowrap topPriority w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
+    <header className='flex flex-wrap sm:flex-nowrap topPriority w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
       <Container>
         <nav
           className='relative max-w-7xl w-full mx-auto sm:flex sm:items-center sm:justify-between '

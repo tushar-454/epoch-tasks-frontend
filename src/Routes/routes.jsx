@@ -9,6 +9,7 @@ import Login from '../Pages/Login';
 import Profile from '../Pages/Profile';
 import Signup from '../Pages/SIgnup';
 import Trash from '../Pages/Trash';
+import Error from './Error';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -16,6 +17,7 @@ const routes = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <Error />,
     children: [
       {
         index: true,
