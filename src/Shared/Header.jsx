@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { CiDark } from 'react-icons/ci';
 import { IoHomeOutline, IoMenuOutline } from 'react-icons/io5';
@@ -35,11 +35,33 @@ const navItems = [
 const Header = () => {
   const [navShow, setNavShow] = useState(false);
   const [dropdown, setDropdown] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('theme'));
   const { user, logOutAccount } = useAuth();
-
+  useEffect(() => {
+    if (
+      darkMode === null &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      localStorage.setItem('theme', 'dark');
+      document.documentElement.classList = 'dark';
+      return;
+    } else {
+      localStorage.setItem('theme', 'light');
+      document.documentElement.classList = 'light';
+    }
+    if (darkMode === 'light') {
+      localStorage.setItem('theme', 'light');
+      document.documentElement.classList = 'light';
+      return;
+    }
+    if (darkMode === 'dark') {
+      localStorage.setItem('theme', 'dark');
+      document.documentElement.classList = 'dark';
+      return;
+    }
+  }, [darkMode]);
   return (
-    <header className='flex flex-wrap sm:flex-nowrap topPriority w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700'>
+    <header className='flex flex-wrap sm:flex-nowrap topPriority w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0 dark:bg-gray-800 dark:border-gray-700 transition-all'>
       <Container>
         <nav
           className='relative max-w-7xl w-full mx-auto sm:flex sm:items-center sm:justify-between '
@@ -107,13 +129,19 @@ const Header = () => {
                       </li>
                       <li
                         onClick={() => {
-                          setDarkMode(!darkMode);
+                          setDarkMode(
+                            darkMode === null
+                              ? 'light'
+                              : darkMode === 'light'
+                              ? 'dark'
+                              : 'light'
+                          );
                           setDropdown(!dropdown);
                           setNavShow(false);
                         }}
                         className='flex gap-2 items-center cursor-pointer px-4 py-2 text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white'
                       >
-                        {darkMode ? (
+                        {darkMode === 'dark' ? (
                           <span className='flex gap-2 items-center'>
                             Lightmode <CiDark />
                           </span>
