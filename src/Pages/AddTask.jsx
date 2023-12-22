@@ -1,17 +1,36 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { MdError } from 'react-icons/md';
 import ButtonFill from '../Components/UI/ButtonFill';
+import useAuth from '../Hook/useAuth';
+import useAxios from '../Hook/useAxios';
 import DashBoardNavItemTitle from '../Shared/DashBoardNavItemTitle';
+import Toast from '../Utils/Toast/Toast';
 
 const AddTask = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
+  const [loading, setLoading] = useState(false);
+  const axios = useAxios();
+  const { user } = useAuth();
+  const onSubmit = async (data) => {
+    try {
+      setLoading(true);
+      const taskInfo = { ...data, email: user?.email };
+      const res = await axios.post('/task/add', taskInfo);
+      if (res.data.message === 'success') {
+        Toast('Add a task successfully.', 'success');
+        reset();
+      }
+    } catch (error) {
+      Toast('There was an error!', 'error');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -132,7 +151,10 @@ const AddTask = () => {
             </p>
           )}
         </div>
-        <ButtonFill type='submit' displayName={'Add Task'} />
+        <ButtonFill
+          type='submit'
+          displayName={loading ? 'Creating...' : 'Add Task'}
+        />
       </form>
     </div>
   );
