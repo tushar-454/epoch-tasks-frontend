@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import useAuth from './useAuth';
 const instance = axios.create({
-  baseURL: 'https://task-management-backend-seven.vercel.app/api/v1',
+  baseURL: 'http://localhost:5000/api/v1',
   withCredentials: true,
 });
 const useAxios = () => {

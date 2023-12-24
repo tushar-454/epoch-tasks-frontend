@@ -19,6 +19,8 @@ const ManageTask = () => {
       return res.data;
     },
   });
+  const withoutCompletedTask =
+    !isLoading && userTasks.filter((task) => task.status !== 'completed');
   return (
     <div className='w-full mx-auto'>
       <DashBoardNavItemTitle displayName='Manage Task' />
@@ -30,12 +32,12 @@ const ManageTask = () => {
           </span>
         ) : isError ? (
           <>{Toast('There was an error', 'error')}</>
-        ) : !isLoading && userTasks.length === 0 ? (
+        ) : !isLoading && withoutCompletedTask.length === 0 ? (
           <>
             <h1>No active task in your list.</h1>
           </>
         ) : (
-          userTasks?.map((userTask, index) => (
+          withoutCompletedTask?.map((userTask, index) => (
             <ManageTaskCard key={index} userTask={userTask} refetch={refetch} />
           ))
         )}

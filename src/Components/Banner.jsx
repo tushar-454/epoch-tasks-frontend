@@ -4,7 +4,7 @@ import ButtonOutline from './UI/ButtonOutline';
 
 const Banner = () => {
   return (
-    <section className='bg-gradient-to-tr from-[#fd6d87] to-[#fbb71d]'>
+    <section className='bg-gradient-to-tr from-[#fd6d87] to-[#fbb71d] mb-5'>
       <Container>
         {/* banner wrapper  */}
         <div className='flex flex-col lg:flex-row justify-center items-center gap-5 lg:gap-10 pb-10 lg:pb-0'>

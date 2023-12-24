@@ -7,7 +7,7 @@ import { PiSignOutBold } from 'react-icons/pi';
 import { RxCross2 } from 'react-icons/rx';
 import { SiKnowledgebase } from 'react-icons/si';
 import { SlUserFemale } from 'react-icons/sl';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavItem from '../Components/NavItem';
 import useAuth from '../Hook/useAuth';
 import logo from '../assets/icon/logo.webp';
@@ -36,6 +36,11 @@ const Header = () => {
   const [dropdown, setDropdown] = useState(false);
   const [darkMode, setDarkMode] = useState(localStorage.getItem('theme'));
   const { user, logOutAccount, forceUP } = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    navigate('/');
+    logOutAccount();
+  };
   useEffect(() => {
     if (
       darkMode === null &&
@@ -152,7 +157,7 @@ const Header = () => {
                       </li>
                       <li
                         onClick={() => {
-                          logOutAccount();
+                          handleLogout();
                           setDropdown(false);
                           setNavShow(false);
                         }}

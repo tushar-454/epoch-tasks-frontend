@@ -47,6 +47,7 @@ const AuthProvider = ({ children }) => {
   const logOutAccount = () => {
     setLoading(false);
     signOut(Auth).then(() => {
+      // navigate('/');
       axios.post('/jwt/remove', {});
       Toast('Logout Successfull', 'success');
     });
