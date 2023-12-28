@@ -90,7 +90,7 @@ const AllTask = () => {
                       : task.title}
                   </h1>
                   <p className='dark:text-slate-300'>
-                    {task.title.length > 23
+                    {task.description.length > 23
                       ? `${task.description.slice(0, 100)}...`
                       : task.description}
                   </p>
@@ -140,7 +140,7 @@ const AllTask = () => {
                       : task.title}
                   </h1>
                   <p className='dark:text-slate-300'>
-                    {task.title.length > 23
+                    {task.description.length > 23
                       ? `${task.description.slice(0, 100)}...`
                       : task.description}
                   </p>
